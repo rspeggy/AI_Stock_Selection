@@ -67,34 +67,27 @@ pip install -r requirements.txt
 ├── config/                        # Configuration files
 ├── features/                      # Feature engineering modules
 ├── portfolio_optimization/        # Portfolio optimization modules
-├── edgar_sentiment_extractor.py   # SEC filing sentiment analysis
-├── train_xgb.py                   # XGBoost model training
-├── optimizer.py                   # Portfolio optimization
-├── predict.py                     # Stock prediction
-├── analyze.py                     # Analysis tools
-└── fastapi_server.py             # API server
 ```
 
 ## Usage
 
 1. **Data Collection and Processing**
 ```bash
-python edgar_sentiment_extractor.py
+python data_loader.py #download stock data from yahoo finance
+python macro_data_loader.py # download macro economic data
+python edgar_sentiment_extractor.py # download Q-10 and K-10 reports and generate factors
+python custom_factors.py # generate factors from stock data
 ```
 
 2. **Model Training**
 ```bash
-python train_xgb.py
+python train_xgb_2.py # train model and select stock according to trend
 ```
 
 3. **Portfolio Optimization**
 ```bash
-python optimizer.py
-```
-
-4. **Prediction and Analysis**
-```bash
-python predict.py
+python optimizer.py # portfolio optimization 
+python optimizer_manual_v1.py
 ```
 
 ## Configuration
@@ -112,18 +105,12 @@ SEC_EMAIL = "your-email@example.com"
 
 ## Results
 
-The system has been backtested over the 2023-2024 period. While demonstrating promising integration of structured and unstructured data, the current implementation shows areas for improvement in:
-- Portfolio diversification
-- Return magnitude filtering
-- Prediction variance reduction
+The system has been backtested over the 2023-2024 period. 
 
 ## Future Enhancements
 
 - Formulation of stock selection as a discrete optimization problem
 - Expanded stock coverage
-- Advanced textual embeddings
-- Reinforcement learning for dynamic allocation
-- Enhanced risk management strategies
 
 ## Contributing
 
