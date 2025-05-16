@@ -1,34 +1,44 @@
-# SEC EDGAR Financial Sentiment Analysis
+# AI-Driven Stock Selection and Portfolio Optimization System
 
-A powerful tool for analyzing sentiment in SEC EDGAR financial reports (10-K and 10-Q) across various industry sectors. This project leverages the Loughran-McDonald financial sentiment dictionary to perform comprehensive sentiment analysis on financial disclosures.
+An intelligent, data-driven stock selection and portfolio optimization system that integrates financial indicators, macroeconomic variables, and sentiment features extracted from SEC filings. The system employs XGBoost for stock movement prediction and Markowitz Mean-Variance Optimization for portfolio allocation.
 
 ## Features
 
-- Automated download of SEC EDGAR filings (10-K and 10-Q)
-- Advanced text cleaning and preprocessing pipeline
-- Sentiment analysis using the Loughran-McDonald financial dictionary
-- Multi-sector analysis support:
+- **Multi-Factor Analysis**
+  - Financial indicators
+  - Macroeconomic variables (GDP, CPI, Unemployment Rate)
+  - Sentiment analysis from SEC filings (10-K and 10-Q)
+  - Loughran-McDonald dictionary-based sentiment scoring
+
+- **Machine Learning Pipeline**
+  - XGBoost-based stock movement prediction
+  - Confidence threshold-based stock selection
+  - Model evaluation and visualization tools
+
+- **Portfolio Optimization**
+  - Markowitz Mean-Variance Optimization framework
+  - Risk-adjusted return maximization
+  - Portfolio rebalancing capabilities
+
+- **Sector Coverage**
   - AI Healthcare
   - Fintech
   - Clean Energy
   - Cloud and Big Data
   - Semiconductor
-- Comprehensive sentiment scoring across multiple dimensions:
-  - Positive
-  - Negative
-  - Uncertainty
-  - Litigious
-  - Constraining
-  - Superfluous
 
 ## Prerequisites
 
 - Python 3.6+
-- Required Python packages:
+- Required Python packages (see requirements.txt):
   - pandas
+  - numpy
+  - xgboost
+  - scikit-learn
+  - cvxpy
+  - yfinance
   - requests
   - sec-edgar-downloader
-  - CustomLMClassifier (included in the project)
 
 ## Installation
 
@@ -43,61 +53,77 @@ cd [repository-name]
 pip install -r requirements.txt
 ```
 
-3. Download the Loughran-McDonald dictionary:
-Place the `Loughran-McDonald_MasterDictionary_1993-2024.csv` file in the project root directory.
-
-## Configuration
-
-1. Update the SEC EDGAR email in `edgar_sentiment_extractor.py`:
-```python
-SEC_EMAIL = "your-email@example.com"  # Replace with your email
-```
-
-2. Modify industry groups and tickers in the configuration section if needed:
-```python
-industry_groups = {
-    'AI Healthcare': ["GH", "EXAS", "ILMN", "TDOC", "MDT"],
-    # ... other sectors
-}
-```
-
-## Usage
-
-Run the main script:
-```bash
-python edgar_sentiment_extractor.py
-```
-
-The script will:
-1. Download SEC filings for all configured companies
-2. Process and clean the text
-3. Perform sentiment analysis
-4. Save results to `data/edgar/edgar_sentiment_scores.csv`
-
-## Output
-
-The analysis results are saved in CSV format with the following columns:
-- ticker: Company stock symbol
-- sector: Industry sector
-- report_type: Type of SEC filing (10-K or 10-Q)
-- file: Path to the analyzed file
-- positive: Positive sentiment score
-- negative: Negative sentiment score
-- uncertainty: Uncertainty score
-- litigious: Litigious score
-- constraining: Constraining score
-- superfluous: Superfluous score
+3. Download required data:
+   - Place the `Loughran-McDonald_MasterDictionary_1993-2024.csv` file in the project root directory
+   - Configure data paths in `workflow_config.yaml`
 
 ## Project Structure
 
 ```
-├── edgar_sentiment_extractor.py    # Main analysis script
-├── custom_lm_classifier.py         # Custom sentiment classifier
-├── requirements.txt               # Project dependencies
-├── data/
-│   └── edgar/                    # Output directory for SEC filings and results
-└── README.md                     # This file
+├── data/                          # Data storage
+├── models/                        # Trained model storage
+├── outputs/                       # Analysis outputs
+├── results/                       # Backtesting results
+├── config/                        # Configuration files
+├── features/                      # Feature engineering modules
+├── portfolio_optimization/        # Portfolio optimization modules
+├── edgar_sentiment_extractor.py   # SEC filing sentiment analysis
+├── train_xgb.py                   # XGBoost model training
+├── optimizer.py                   # Portfolio optimization
+├── predict.py                     # Stock prediction
+├── analyze.py                     # Analysis tools
+└── fastapi_server.py             # API server
 ```
+
+## Usage
+
+1. **Data Collection and Processing**
+```bash
+python edgar_sentiment_extractor.py
+```
+
+2. **Model Training**
+```bash
+python train_xgb.py
+```
+
+3. **Portfolio Optimization**
+```bash
+python optimizer.py
+```
+
+4. **Prediction and Analysis**
+```bash
+python predict.py
+```
+
+## Configuration
+
+1. Update the configuration in `workflow_config.yaml`:
+   - Data paths
+   - Model parameters
+   - Optimization constraints
+   - API settings
+
+2. Configure SEC EDGAR access in `edgar_sentiment_extractor.py`:
+```python
+SEC_EMAIL = "your-email@example.com"
+```
+
+## Results
+
+The system has been backtested over the 2023-2024 period. While demonstrating promising integration of structured and unstructured data, the current implementation shows areas for improvement in:
+- Portfolio diversification
+- Return magnitude filtering
+- Prediction variance reduction
+
+## Future Enhancements
+
+- Formulation of stock selection as a discrete optimization problem
+- Expanded stock coverage
+- Advanced textual embeddings
+- Reinforcement learning for dynamic allocation
+- Enhanced risk management strategies
 
 ## Contributing
 
@@ -109,6 +135,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
-- SEC EDGAR database for financial filings
+- SEC EDGAR database
 - Loughran-McDonald financial sentiment dictionary
-- sec-edgar-downloader package
+- XGBoost development team
+- Markowitz portfolio theory
